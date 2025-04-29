@@ -15,14 +15,14 @@ This is a beginner-friendly blockchain mini project built using **pure Python** 
 ---
 
 ## 📁 Project Structure
-
+```
 blockchain_flask/
 ├── app.py # Flask web server 
 ├── blockchain.py # Core blockchain logic 
 ├── templates/ 
     │ └── index.html # Frontend template 
 └── README.md
-
+```
 ---
 
 ## 💡 How to Run
