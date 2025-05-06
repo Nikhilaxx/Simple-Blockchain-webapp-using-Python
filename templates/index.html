@@ -1,36 +1,88 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Python Blockchain</title>
+    <title>Simple Blockchain</title>
     <style>
-        body { font-family: Arial; padding: 20px; background-color: #f5f5f5; }
-        h1 { color: #333; }
-        .block { background: white; padding: 15px; margin: 10px 0; border-left: 5px solid #3498db; }
-        .form { margin-bottom: 20px; }
-        input[type="text"] { padding: 8px; width: 300px; }
-        input[type="submit"] { padding: 8px 15px; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .block {
+            border: 2px solid black;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .invalid {
+            background-color: #f8d7da;
+            border-color: red;
+        }
+        .edit-form {
+            margin-top: 10px;
+            display: none;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 70%;
+        }
+        input[type="submit"] {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        h1 {
+            color: #333;
+        }
     </style>
+    <script>
+        function toggleForm(index) {
+            // Hide all forms first
+            const formDivs = document.querySelectorAll('.edit-form');
+            formDivs.forEach(div => div.style.display = 'none');
+            
+            // Show the selected form
+            const form = document.getElementById('form-' + index);
+            if (form) {
+                form.style.display = 'block';
+            }
+        }
+    </script>
 </head>
 <body>
-    <h1>Simple Blockchain in Python</h1>
-
+    <h1>Simple Blockchain Demonstration</h1>
+    <p>Add blocks to the chain. Edit any block to see how it affects the entire blockchain's integrity.</p>
+    
     <div class="form">
         <form action="/add_block" method="POST">
             <input type="text" name="data" placeholder="Enter block data" required>
             <input type="submit" value="Add Block">
         </form>
     </div>
-
+    
     {% for block in chain %}
-        <div class="block">
-            <strong>Block #{{ block.index }}</strong><br>
-            <strong>Timestamp:</strong> {{ block.timestamp }}<br>
-            <strong>Data:</strong> {{ block.data }}<br>
-            <strong>Previous Hash:</strong> {{ block.previous_hash }}<br>
-            <strong>Hash:</strong> {{ block.hash }}<br>
+    <div class="block {% if block.index in invalid_indices %}invalid{% endif %}" onclick="toggleForm({{ block.index }})">
+        <strong>Block #{{ block.index }}</strong><br>
+        <strong>Timestamp:</strong> {{ block.timestamp }}<br>
+        <strong>Data:</strong> {{ block.data }}<br>
+        <strong>Previous Hash:</strong> {{ block.previous_hash }}<br>
+        <strong>Hash:</strong> {{ block.hash }}<br>
+        
+        {% if block.index != 0 %}
+        <div class="edit-form" id="form-{{ block.index }}">
+            <form action="/edit_block/{{ block.index }}" method="POST">
+                <input type="text" name="new_data" value="{{ block.data }}" required>
+                <input type="submit" value="Update Block">
+            </form>
         </div>
+        {% endif %}
+    </div>
     {% endfor %}
 </body>
 </html>
