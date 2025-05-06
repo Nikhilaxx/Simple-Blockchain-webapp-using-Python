@@ -10,7 +10,9 @@ This is a beginner-friendly blockchain mini project built using **pure Python** 
 - Genesis block creation
 - Add new blocks via web form
 - Display the full blockchain in the browser
+- Visual indication of tampered blocks and all subsequent blocks
 - All done using only Python (no fancy blockchain libraries)
+- Basic blockchain structure (blocks, hashes, links)
 
 ---
 
