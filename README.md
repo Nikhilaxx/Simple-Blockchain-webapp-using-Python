@@ -28,6 +28,9 @@ blockchain_flask/
 ---
 
 ## 💡 How to Run
+```
+python app.py
+```
 
 ### 🔧 Prerequisites
 - Python 3.x
